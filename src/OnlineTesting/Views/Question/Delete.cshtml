@@ -1,0 +1,29 @@
+﻿@using OnlineTesting.Models.DTOs
+@model QuestionDto
+
+<h2>Видалити питання</h2>
+
+<h3>Ви впевнені, що хочете видалити це питання?</h3>
+
+<div>
+    <h4>@Model.Text</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Текст питання</dt>
+        <dd class="col-sm-10">@Model.Text</dd>
+    </dl>
+
+    <h5>Відповіді:</h5>
+    <ul>
+        @foreach (var answer in Model.Answers)
+        {
+            <li>@answer.Text @(answer.IsCorrect ? "(Правильна)" : "")</li>
+        }
+    </ul>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Видалити</button>
+        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+    </form>
+</div>

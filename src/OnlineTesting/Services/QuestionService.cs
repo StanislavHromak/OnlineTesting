@@ -1,5 +1,6 @@
 ﻿using OnlineTesting.Data.Repositories.Abstractions;
 using OnlineTesting.Models;
+using OnlineTesting.Models.DTOs;
 using OnlineTesting.Services.Abstractions;
 
 namespace OnlineTesting.Services;
@@ -40,6 +41,23 @@ public class QuestionService : IQuestionService
 
     public async Task CreateAsync(Question question)
     {
+        await _unitOfWork.Questions.AddAsync(question);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task CreateWithAnswersAsync(QuestionDto questionDto)
+    {
+        var question = new Question
+        {
+            Text = questionDto.Text,
+            DisciplineId = questionDto.DisciplineId,
+            Answers = questionDto.Answers.Select(a => new Answer
+            {
+                Text = a.Text,
+                IsCorrect = a.IsCorrect
+            }).ToList()
+        };
+
         await _unitOfWork.Questions.AddAsync(question);
         await _unitOfWork.SaveChangesAsync();
     }

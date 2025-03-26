@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Question>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Текст питання</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model)
+            {
+                <tr>
+                    <td>@question.Text</td>
+                    <td>
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@question.Id" class="btn btn-warning">Редагувати</a>
+                            <a asp-action="Delete" asp-route-id="@question.Id" class="btn btn-danger">Видалити</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Питань для цієї дисципліни немає.</p>
+}
