@@ -4,6 +4,8 @@ using OnlineTesting.Data;
 using OnlineTesting.Data.Repositories.Abstractions;
 using OnlineTesting.Data.Repositories;
 using OnlineTesting.Models;
+using OnlineTesting.Services.Abstractions;
+using OnlineTesting.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

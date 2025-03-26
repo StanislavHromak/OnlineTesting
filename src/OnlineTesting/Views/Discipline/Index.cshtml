@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Discipline>
+
+<div class="container pb-4 pt-4 ps-0">
+    <div class="col-6">
+        <div class="row p-3 ps-0">
+            <h2 class="text-primary">Список дициплін</h2>
+        </div>
+        <div class="col-5">
+            <a class="btn btn-primary" asp-action="Create" asp-controller="Discipline">Додати</a>
+        </div>
+    </div>
+</div>
+<table class="stripe" style="font-size: 16px;" id="dataTableData">
+    <thead>
+        <tr>
+            <th>Назва</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td role="group">
+                    <a class="btn btn-outline-primary p-1" asp-action="Edit" asp-controller="Discipline" asp-route-id="@item.Id">Редагувати</a>
+                    <a class="btn btn-outline-danger p-1" asp-action="Delete" asp-controller="Discipline" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="~/js/datatable.js"></script>
+}

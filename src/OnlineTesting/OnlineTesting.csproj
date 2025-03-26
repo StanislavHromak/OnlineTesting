@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Identity\" />
+    <Folder Include="Areas\Teacher\Views\" />
+    <Folder Include="Models\DTOs\Discipline\" />
   </ItemGroup>
 
 </Project>
