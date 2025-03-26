@@ -7,6 +7,7 @@ public class StudentTest
     public string StudentId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
+    public int CurrentQuestionIndex { get; set; }
     public int TotalScore { get; set; }
 
     public ExamTemplate ExamTemplate { get; set; }

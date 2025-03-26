@@ -1,0 +1,89 @@
+﻿@using OnlineTesting.Models.DTOs.StudentTest
+@model TakeTestDto
+
+<h2>Проходження тесту</h2>
+
+<div>
+    <h4>Питання @(Model.CurrentQuestionIndex + 1) з @Model.TotalQuestions</h4>
+    <p>Залишилося часу: <span id="timer">@Model.RemainingTimeSeconds</span> секунд</p>
+    <hr />
+
+    <form id="questionForm">
+        <input type="hidden" name="TestId" value="@Model.TestId" />
+        <input type="hidden" name="QuestionId" value="@Model.CurrentQuestion.QuestionId" />
+
+        <div class="form-group">
+            <label>@Model.CurrentQuestion.Text</label>
+            <div>
+                @foreach (var answer in Model.CurrentQuestion.Answers)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="SelectedAnswerIds" value="@answer.AnswerId" />
+                        <label class="form-check-label">@answer.Text</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @if (Model.CurrentQuestionIndex < Model.TotalQuestions - 1)
+            {
+                <button type="button" id="nextButton" class="btn btn-primary">Далі</button>
+            }
+            else
+            {
+                <button type="button" id="nextButton" class="btn btn-primary">Завершити</button>
+            }
+            <form asp-action="CompleteTest" method="post" style="display:inline;">
+                <input type="hidden" name="testId" value="@Model.TestId" />
+                <button type="submit" class="btn btn-danger">Завершити тест</button>
+            </form>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var remainingTime = @Model.RemainingTimeSeconds;
+            var timerElement = $("#timer");
+
+            var timer = setInterval(function () {
+                remainingTime--;
+                timerElement.text(remainingTime);
+
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                    $("#questionForm").submit();
+                }
+            }, 1000);
+
+            $("#nextButton").click(function () {
+                var formData = $("#questionForm").serialize();
+                $.ajax({
+                    url: '@Url.Action("SaveResponse", "StudentTest")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            if (response.redirectTo) {
+                                window.location.href = response.redirectTo;
+                            } else {
+                                window.location.reload();
+                            }
+                        } else {
+                            if (response.redirectTo) {
+                                window.location.href = response.redirectTo;
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("Помилка при збереженні відповіді.");
+                    }
+                });
+            });
+        });
+    </script>
+}

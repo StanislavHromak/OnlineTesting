@@ -29,6 +29,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                 j => j.HasOne<Question>().WithMany().HasForeignKey("QuestionsId").OnDelete(DeleteBehavior.Restrict),
                 j => j.HasOne<ExamTemplate>().WithMany().HasForeignKey("ExamTemplatesId").OnDelete(DeleteBehavior.Cascade));
 
+        modelBuilder.Entity<StudentResponse>()
+            .HasMany(sr => sr.SelectedAnswers)
+            .WithMany(a => a.StudentResponses)
+            .UsingEntity<Dictionary<string, object>>("StudentResponseAnswers",
+                j => j.HasOne<Answer>().WithMany().HasForeignKey("AnswerId").OnDelete(DeleteBehavior.Restrict),
+                j => j.HasOne<StudentResponse>().WithMany().HasForeignKey("StudentResponseId").OnDelete(DeleteBehavior.Cascade));
+
         modelBuilder.Entity<Question>()
             .HasOne(q => q.Discipline)
             .WithMany(d => d.Questions)
@@ -69,12 +76,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(sr => sr.Question)
             .WithMany(q => q.StudentResponses)
             .HasForeignKey(sr => sr.QuestionId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<StudentResponse>()
-            .HasOne(sr => sr.Answer)
-            .WithMany(a => a.StudentResponses)
-            .HasForeignKey(sr => sr.AnswerId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -29,18 +29,11 @@ public class StudentTestRepository : GenericRepository<StudentTest>, IStudentTes
         return await _context.StudentTests
             .Include(st => st.StudentResponses)
                 .ThenInclude(sr => sr.Question)
-            .Include(st => st.StudentResponses)
-                .ThenInclude(sr => sr.Answer)
             .FirstOrDefaultAsync(st => st.Id == testId);
     }
 
     public async Task<int> CalculateScoreAsync(int testId)
     {
-        var responses = await _context.StudentResponses
-            .Include(sr => sr.Answer)
-            .Where(sr => sr.TestId == testId)
-            .ToListAsync();
-
-        return responses.Sum(r => r.Answer.IsCorrect ? 1 : 0);
+        return 0;
     }
 }

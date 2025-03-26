@@ -1,0 +1,51 @@
+﻿@using OnlineTesting.Models.DTOs.StudentTest
+@model IEnumerable<StudentTestDto>
+
+<h2>Доступні тести</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Назва тесту</th>
+            <th>Дисципліна</th>
+            <th>Тривалість (хв)</th>
+            <th>Кількість питань</th>
+            <th>Статус</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var test in Model)
+        {
+            <tr>
+                <td>@test.TemplateName</td>
+                <td>@test.DisciplineName</td>
+                <td>@test.Duration</td>
+                <td>@test.QuestionCount</td>
+                <td>
+                    @if (test.HasTaken)
+                    {
+                        <span>Пройдено (Бал: @test.Score / @test.QuestionCount)</span>
+                    }
+                    else
+                    {
+                        <span>Не пройдено</span>
+                    }
+                </td>
+                <td>
+                    @if (!test.HasTaken)
+                    {
+                        <form asp-action="StartTest" method="post">
+                            <input type="hidden" name="templateId" value="@test.TemplateId" />
+                            <button type="submit" class="btn btn-primary">Почати тест</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-action="Result" asp-route-testId="@test.TemplateId" class="btn btn-info">Переглянути результат</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
