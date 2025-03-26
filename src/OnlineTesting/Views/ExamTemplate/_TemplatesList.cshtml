@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ExamTemplate>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Кількість питань</th>
+                <th>Тривалість (хв)</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in Model)
+            {
+                <tr>
+                    <td>@template.Name</td>
+                    <td>@template.NumberOfQuestions</td>
+                    <td>@template.TimeLimit</td>
+                    <td>
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-warning">Редагувати</a>
+                            <a asp-action="Delete" asp-route-id="@template.Id" class="btn btn-danger">Видалити</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Шаблонів для цієї дисципліни немає.</p>
+}

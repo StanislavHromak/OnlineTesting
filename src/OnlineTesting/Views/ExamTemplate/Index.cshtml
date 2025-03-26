@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ExamTemplate>
+
+<h2>Шаблони іспитів</h2>
+
+<div class="form-group">
+    <label for="disciplineSelect">Оберіть дисципліну:</label>
+    <select id="disciplineSelect" class="form-control">
+        <option value="">-- Оберіть дисципліну --</option>
+        @foreach (var discipline in ViewBag.Disciplines)
+        {
+            <option value="@discipline.Value">@discipline.Text</option>
+        }
+    </select>
+</div>
+
+<div id="templatesList">
+    <p>Оберіть дисципліну, щоб переглянути шаблони іспитів.</p>
+</div>
+
+<p>
+    @if (User.IsInRole("Teacher"))
+    {
+        <a asp-action="Create" class="btn btn-primary">Створити новий шаблон</a>
+    }
+</p>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#disciplineSelect").change(function () {
+                var disciplineId = $(this).val();
+                if (disciplineId) {
+                    $.ajax({
+                        url: '@Url.Action("GetTemplatesByDiscipline", "ExamTemplate")',
+                        type: 'GET',
+                        data: { disciplineId: disciplineId },
+                        success: function (data) {
+                            $("#templatesList").html(data);
+                        },
+                        error: function () {
+                            $("#templatesList").html('<p>Помилка при завантаженні шаблонів.</p>');
+                        }
+                    });
+                } else {
+                    $("#templatesList").html('<p>Оберіть дисципліну, щоб переглянути шаблони іспитів.</p>');
+                }
+            });
+        });
+    </script>
+}
