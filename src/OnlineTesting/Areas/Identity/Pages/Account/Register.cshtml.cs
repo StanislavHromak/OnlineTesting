@@ -70,6 +70,16 @@ namespace OnlineTesting.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required(ErrorMessage = "Поле Прізвище є обов'язковим")]
+            [Display(Name = "Прізвище")]
+            public string Surname { get; set; }
+
+            [Required(ErrorMessage = "Поле Ім'я є обов'язковим")]
+            [Display(Name = "Ім'я")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "По батькові")]
+            public string MiddleName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -113,6 +123,9 @@ namespace OnlineTesting.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Name = Input.FirstName;
+                user.Surname = Input.Surname;
+                user.MiddleName = Input.MiddleName;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
