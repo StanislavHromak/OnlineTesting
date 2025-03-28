@@ -30,6 +30,18 @@ public class StudentTestService : IStudentTestService
         return await _unitOfWork.StudentTests.GetWithResponsesAsync(testId);
     }
 
+    public async Task<TestResultDto> GetTestResult(int testId)
+    {
+        var test = await _unitOfWork.StudentTests.GetByIdAsync(testId);
+
+        return new TestResultDto
+        {
+            StartTime = test.StartTime,
+            EndTime = test.EndTime,
+            Score = test.TotalScore
+        };
+    }
+
     public async Task<int> CalculateScoreAsync(int testId)
     {
         return await _unitOfWork.StudentTests.CalculateScoreAsync(testId);
@@ -72,7 +84,13 @@ public class StudentTestService : IStudentTestService
         var template = await _unitOfWork.ExamTemplates.GetWithQuestionsAsync(test.TemplateId);
         if (test.CurrentQuestionIndex >= template.Questions.Count)
         {
-            throw new InvalidOperationException("Усі питання вже пройдені.");
+            return new TakeTestDto
+            {
+                TestId = test.Id,
+                CurrentQuestionIndex = test.CurrentQuestionIndex,
+                TotalQuestions = template.Questions.Count,
+                CurrentQuestion = null
+            };
         }
 
         var remainingTime = (int)(template.TimeLimit * 60 - (DateTime.UtcNow - test.StartTime).TotalSeconds);

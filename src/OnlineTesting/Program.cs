@@ -23,6 +23,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDisciplineService, DisciplineService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IExamTemplateService, ExamTemplateService>();
+builder.Services.AddScoped<IStudentTestService, StudentTestService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -1,0 +1,44 @@
+﻿@using OnlineTesting.Models.DTOs.StudentTest
+@model TestResultDto
+
+@{
+    ViewData["Title"] = "Результати тесту";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Результати тесту</h2>
+
+    <!-- Загальна інформація про тест -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h4>Ваш бал</h4>
+                    <p class="display-4 text-primary">@Model.Score / number</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4>Час початку</h4>
+                    <p class="lead">@Model.StartTime.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4>Час завершення</h4>
+                    <p class="lead">
+                        @if (Model.EndTime.HasValue)
+                        {
+                            @Model.EndTime.Value.ToString("dd.MM.yyyy HH:mm:ss")
+                        }
+                        else
+                        {
+                            <span>Тест ще не завершений</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка повернення -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-primary btn-lg">Повернутися до списку тестів</a>
+    </div>
+</div>

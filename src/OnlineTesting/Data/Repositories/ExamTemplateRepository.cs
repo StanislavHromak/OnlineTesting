@@ -32,6 +32,7 @@ public class ExamTemplateRepository : GenericRepository<ExamTemplate>, IExamTemp
     {
         return await _context.ExamTemplates
             .Include(et => et.Questions)
+            .ThenInclude(q => q.Answers)
             .FirstOrDefaultAsync(et => et.Id == templateId);
     }
 
