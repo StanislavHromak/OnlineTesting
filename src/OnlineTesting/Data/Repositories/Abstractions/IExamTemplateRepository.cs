@@ -8,6 +8,8 @@ public interface IExamTemplateRepository : IGenericRepository<ExamTemplate>
 
     Task<IEnumerable<ExamTemplate>> GetByTeacherIdAsync(string teacherId);
 
+    Task<IEnumerable<ExamTemplate>> GetAllWithDisciplinesAsync();
+
     Task<ExamTemplate> GetWithQuestionsAsync(int templateId);
 
     //Task CreateWithRandomQuestionsAsync(ExamTemplate examTemplate);

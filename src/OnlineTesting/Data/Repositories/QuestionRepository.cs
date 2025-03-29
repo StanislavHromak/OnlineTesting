@@ -10,6 +10,11 @@ public class QuestionRepository : GenericRepository<Question>, IQuestionReposito
     {
     }
 
+    public IQueryable<Question> GetAll()
+    {
+        return _context.Questions.AsQueryable();
+    }
+
     public async Task<IEnumerable<Question>> GetByDisciplineIdAsync(int disciplineId)
     {
         return await _context.Questions

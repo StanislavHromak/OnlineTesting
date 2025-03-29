@@ -27,13 +27,17 @@ public class StudentTestRepository : GenericRepository<StudentTest>, IStudentTes
     public async Task<StudentTest> GetWithResponsesAsync(int testId)
     {
         return await _context.StudentTests
-            .Include(st => st.StudentResponses)
+            .Include(t => t.StudentResponses)
                 .ThenInclude(sr => sr.Question)
+            .Include(t => t.StudentResponses)
+                .ThenInclude(sr => sr.SelectedAnswers)
             .FirstOrDefaultAsync(st => st.Id == testId);
     }
 
-    public async Task<int> CalculateScoreAsync(int testId)
+    public async Task<StudentTest> GetWithTemplateAsync(int testId)
     {
-        return 0;
+        return await _context.StudentTests
+            .Include(t => t.ExamTemplate)
+            .FirstOrDefaultAsync(st => st.Id == testId);
     }
 }

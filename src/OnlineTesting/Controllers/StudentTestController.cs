@@ -23,7 +23,7 @@ public class StudentTestController : Controller
     public async Task<IActionResult> Index()
     {
         var studentId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        var templates = await _examTemplateService.GetByDisciplineIdAsync(6); // Отримуємо всі шаблони
+        var templates = await _examTemplateService.GetAllWithDisciplineAsync(); // Отримуємо всі шаблони
         var studentTests = await _studentTestService.GetByStudentIdAsync(studentId);
 
         var studentTestDtos = templates.Select(t => new StudentTestDto
@@ -32,11 +32,9 @@ public class StudentTestController : Controller
             TemplateName = t.Name,
             DisciplineName = t.Discipline?.Name,
             Duration = t.TimeLimit,
-            QuestionCount = t.Questions?.Count ?? 0,
+            QuestionCount = t.NumberOfQuestions,
             HasTaken = studentTests.Any(st => st.TemplateId == t.Id),
-            Score = studentTests.FirstOrDefault(st => st.TemplateId == t.Id)?.EndTime.HasValue == true
-                ? 0
-                : null
+            Score = studentTests.FirstOrDefault(st => st.TemplateId == t.Id)?.TotalScore
         }).ToList();
 
         return View(studentTestDtos);

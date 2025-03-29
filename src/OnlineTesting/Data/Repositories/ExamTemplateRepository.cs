@@ -28,6 +28,13 @@ public class ExamTemplateRepository : GenericRepository<ExamTemplate>, IExamTemp
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<ExamTemplate>> GetAllWithDisciplinesAsync()
+    {
+        return await _context.ExamTemplates
+            .Include(et => et.Discipline)
+            .ToListAsync();
+    }
+
     public async Task<ExamTemplate> GetWithQuestionsAsync(int templateId)
     {
         return await _context.ExamTemplates

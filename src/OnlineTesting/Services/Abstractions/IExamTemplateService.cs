@@ -8,6 +8,7 @@ public interface IExamTemplateService
     Task<ExamTemplate> GetByIdAsync(int id);
     Task<IEnumerable<ExamTemplate>> GetByDisciplineIdAsync(int disciplineId);
     Task<IEnumerable<ExamTemplate>> GetByTeacherIdAsync(string teacherId);
+    Task<IEnumerable<ExamTemplate>> GetAllWithDisciplineAsync();
     Task<ExamTemplate> GetWithQuestionsAsync(int templateId);
     Task CreateWithRandomQuestionsAsync(ExamTemplateDto templateDto);
     Task UpdateAsync(ExamTemplate examTemplate);

@@ -10,5 +10,5 @@ public interface IStudentTestRepository : IGenericRepository<StudentTest>
 
     Task<StudentTest> GetWithResponsesAsync(int testId);
 
-    Task<int> CalculateScoreAsync(int testId);
+    Task<StudentTest> GetWithTemplateAsync(int testId);
 }

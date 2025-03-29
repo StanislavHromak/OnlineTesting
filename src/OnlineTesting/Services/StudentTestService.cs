@@ -3,6 +3,7 @@ using OnlineTesting.Models;
 using OnlineTesting.Models.DTOs;
 using OnlineTesting.Models.DTOs.StudentTest;
 using OnlineTesting.Services.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineTesting.Services;
 
@@ -32,19 +33,19 @@ public class StudentTestService : IStudentTestService
 
     public async Task<TestResultDto> GetTestResult(int testId)
     {
-        var test = await _unitOfWork.StudentTests.GetByIdAsync(testId);
+        var test = await _unitOfWork.StudentTests.GetWithTemplateAsync(testId);
+        if (test == null)
+        {
+            throw new InvalidOperationException("Тест не знайдено.");
+        }
 
         return new TestResultDto
         {
             StartTime = test.StartTime,
             EndTime = test.EndTime,
-            Score = test.TotalScore
+            Score = test.TotalScore,
+            TotalQuestions = test.ExamTemplate.NumberOfQuestions
         };
-    }
-
-    public async Task<int> CalculateScoreAsync(int testId)
-    {
-        return await _unitOfWork.StudentTests.CalculateScoreAsync(testId);
     }
 
     public async Task<StudentTest> CreateAsync(int templateId, string studentId)
@@ -164,7 +165,59 @@ public class StudentTestService : IStudentTestService
         }
 
         test.EndTime = DateTime.UtcNow;
+
+        test.TotalScore = await CalculateScoreAsync(testId);
+
         _unitOfWork.StudentTests.Update(test);
         await _unitOfWork.SaveChangesAsync();
+    }
+
+    private async Task<int> CalculateScoreAsync(int testId)
+    {
+        var test = await _unitOfWork.StudentTests.GetWithResponsesAsync(testId);
+        if (test == null)
+        {
+            throw new InvalidOperationException("Тест не знайдено.");
+        }
+
+        // Отримуємо всі відповіді студента для цього тесту
+        var responses = test.StudentResponses.ToList();
+
+        // Отримуємо всі питання, на які студент відповідав
+        var questionIds = responses.Select(r => r.QuestionId).Distinct().ToList();
+        var questions = await _unitOfWork.Questions
+            .GetAll()
+            .Where(q => questionIds.Contains(q.Id))
+            .Include(q => q.Answers)
+            .ToListAsync();
+
+        int score = 0;
+
+        foreach (var response in responses)
+        {
+            var question = questions.First(q => q.Id == response.QuestionId);
+            var correctAnswers = question.Answers.Where(a => a.IsCorrect).ToList();
+            var selectedAnswers = response.SelectedAnswers.ToList();
+
+            bool isCorrect;
+            if (correctAnswers.Count > 1)
+            {
+                var selectedAnswerIds = selectedAnswers.Select(a => a.Id).ToList();
+                var correctAnswerIds = correctAnswers.Select(a => a.Id).ToList();
+                isCorrect = selectedAnswerIds.Count == correctAnswerIds.Count &&
+                           selectedAnswerIds.All(id => correctAnswerIds.Contains(id));
+            }
+            else
+            {
+                isCorrect = selectedAnswers.Count == 1 && selectedAnswers.First().IsCorrect;
+            }
+
+            if (isCorrect)
+            {
+                score++;
+            }
+        }
+
+        return score;
     }
 }

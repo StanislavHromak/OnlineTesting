@@ -29,6 +29,12 @@ public class ExamTemplateService : IExamTemplateService
         return await _unitOfWork.ExamTemplates.GetByTeacherIdAsync(teacherId);
     }
 
+    public async Task<IEnumerable<ExamTemplate>> GetAllWithDisciplineAsync()
+    {
+        return await _unitOfWork.ExamTemplates
+            .GetAllWithDisciplinesAsync();
+    }
+
     public async Task<ExamTemplate> GetWithQuestionsAsync(int templateId)
     {
         return await _unitOfWork.ExamTemplates.GetWithQuestionsAsync(templateId);
