@@ -109,6 +109,7 @@ public class QuestionController : Controller
 
         var disciplines = await _disciplineService.GetAllAsync();
         ViewBag.Disciplines = new SelectList(disciplines, "Id", "Name", questionDto.DisciplineId);
+        ViewBag.IsUsedInCompletedTests = await _questionService.IsUsedInCompletedTestsAsync(id);
         return View(questionDto);
     }
 

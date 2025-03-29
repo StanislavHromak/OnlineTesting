@@ -14,4 +14,5 @@ public interface IQuestionService
     Task CreateWithAnswersAsync(QuestionDto questionDto);
     Task UpdateAsync(Question question);
     Task DeleteAsync(int id);
+    Task<bool> IsUsedInCompletedTestsAsync(int questionId);
 }

@@ -77,4 +77,11 @@ public class QuestionService : IQuestionService
             await _unitOfWork.SaveChangesAsync();
         }
     }
+
+    public async Task<bool> IsUsedInCompletedTestsAsync(int questionId)
+    {
+        var studentResponses = await _unitOfWork.StudentResponses.GetByQuestionIdAsync(questionId);
+        return studentResponses
+            .Any();
+    }
 }

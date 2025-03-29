@@ -16,4 +16,11 @@ public class StudentResponseRepository : GenericRepository<StudentResponse>, ISt
             .Where(sr => sr.TestId == testId)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<StudentResponse>> GetByQuestionIdAsync(int questionId)
+    {
+        return await _context.StudentResponses
+            .Where(sr => sr.QuestionId == questionId)
+            .ToListAsync();
+    }
 }
