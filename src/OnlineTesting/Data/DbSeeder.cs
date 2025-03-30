@@ -11,7 +11,7 @@ public class DbSeeder
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-        string[] roles = { "Teacher", "Student" };
+        string[] roles = { "Teacher", "Student", "Dean" };
         foreach (var role in roles)
         {
             if (!await roleManager.RoleExistsAsync(role))

@@ -23,7 +23,7 @@ public class StudentTestController : Controller
     public async Task<IActionResult> Index()
     {
         var studentId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        var templates = await _examTemplateService.GetAllWithDisciplineAsync(); // Отримуємо всі шаблони
+        var templates = await _examTemplateService.GetAllWithDisciplineAsync();
         var studentTests = await _studentTestService.GetByStudentIdAsync(studentId);
 
         var studentTestDtos = templates.Select(t => new StudentTestDto

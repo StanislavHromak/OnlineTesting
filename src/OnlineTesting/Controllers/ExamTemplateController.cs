@@ -61,7 +61,6 @@ public class ExamTemplateController : Controller
         {
             try
             {
-                // Отримуємо ID поточного користувача (викладача)
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
@@ -70,7 +69,6 @@ public class ExamTemplateController : Controller
 
                 templateDto.TeacherId = user.Id;
 
-                // Створюємо шаблон із випадковими питаннями
                 await _examTemplateService.CreateWithRandomQuestionsAsync(templateDto);
                 return RedirectToAction(nameof(Index));
             }
@@ -155,7 +153,6 @@ public class ExamTemplateController : Controller
             return NotFound();
         }
 
-        // Перевіряємо, чи належить шаблон поточному викладачу
         var user = await _userManager.GetUserAsync(User);
         if (template.TeacherId != user.Id)
         {
@@ -187,7 +184,6 @@ public class ExamTemplateController : Controller
             return NotFound();
         }
 
-        // Перевіряємо, чи належить шаблон поточному викладачу
         var user = await _userManager.GetUserAsync(User);
         if (template.TeacherId != user.Id)
         {
