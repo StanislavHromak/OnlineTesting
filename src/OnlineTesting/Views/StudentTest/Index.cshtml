@@ -35,7 +35,7 @@
                 <td>
                     <form asp-action="StartTest" method="post">
                         <input type="hidden" name="templateId" value="@test.TemplateId" />
-                        <button type="submit" class="btn btn-primary" disabled="!test.HasTaken">Почати тест</button>
+                        <button type="submit" class="btn btn-primary" disabled="@test.HasTaken">Почати тест</button>
                     </form>
                 </td>
             </tr>

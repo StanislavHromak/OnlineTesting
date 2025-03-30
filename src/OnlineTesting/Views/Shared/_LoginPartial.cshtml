@@ -2,19 +2,19 @@
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <span class="nav-link text-dark">Hello, @User.Identity.Name!</span>
+            <span class="nav-link text-dark fst-italic">@User.Identity.Name</span>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Вихід</a>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Зареєструватися</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Логін</a>
         </li>
     }
 </ul>
