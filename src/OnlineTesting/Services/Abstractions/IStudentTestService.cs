@@ -8,6 +8,7 @@ public interface IStudentTestService
 {
     Task<StudentTest> GetByIdAsync(int id);
     Task<IEnumerable<StudentTest>> GetByStudentIdAsync(string studentId);
+    Task<IEnumerable<StudentTest>> GetByTemplateIdAsync(int templateId);
     Task<StudentTest> GetWithResponsesAsync(int testId);
     Task<TestResultDto> GetTestResult(int testId);
     Task<StudentTest> CreateAsync(int templateId, string studentId);

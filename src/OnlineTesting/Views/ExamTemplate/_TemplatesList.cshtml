@@ -21,6 +21,8 @@
                     <td>
                         @if (User.IsInRole("Teacher"))
                         {
+                            <a asp-action="StudentResults" asp-controller="StudentTest" asp-route-templateId="@template.Id"
+                            class="btn btn-info">Результати студентів</a>
                             <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-warning">Редагувати</a>
                             <a asp-action="Delete" asp-route-id="@template.Id" class="btn btn-danger">Видалити</a>
                         }

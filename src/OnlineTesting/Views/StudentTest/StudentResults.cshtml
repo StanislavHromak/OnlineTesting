@@ -1,0 +1,61 @@
+﻿@using OnlineTesting.Models.DTOs.StudentTest
+@model IEnumerable<StudentTestResultDto>
+
+@{
+    ViewData["Title"] = "Результати студентів";
+}
+
+<div class="container">
+    <h2 class="mt-4">Результати студентів</h2>
+    <p class="text-muted">Шаблон іспиту: #@Model.FirstOrDefault()?.TotalQuestions</p>
+
+    @if (Model.Any())
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Студент</th>
+                            <th>Час початку</th>
+                            <th>Час завершення</th>
+                            <th>Бали</th>
+                            <th>Відсоток</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var result in Model)
+                        {
+                            <tr>
+                                <td>@result.StudentName</td>
+                                <td>@result.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                                <td>
+                                    @(result.EndTime.HasValue ? result.EndTime.Value.ToString("dd.MM.yyyy HH:mm") : "Не завершено")
+                                </td>
+                                <td>@result.Score/@result.TotalQuestions</td>
+                                <td>
+                                    @{
+                                        var percentage = result.TotalQuestions > 0
+                                        ? Math.Round((double)result.Score / result.TotalQuestions * 100, 2)
+                                        : 0;
+                                    }
+                                    @percentage%
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-4" role="alert">
+            Результати для цього шаблону відсутні.
+        </div>
+    }
+
+    <div class="mt-4">
+        <a asp-controller="ExamTemplate" asp-action="Index" class="btn btn-secondary">Повернутися до шаблонів</a>
+    </div>
+</div>

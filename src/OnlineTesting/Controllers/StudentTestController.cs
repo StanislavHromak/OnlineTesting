@@ -40,6 +40,29 @@ public class StudentTestController : Controller
         return View(studentTestDtos);
     }
 
+    [Authorize(Roles = "Teacher")]
+    public async Task<IActionResult> StudentResults(int templateId)
+    {
+        var studentTests = await _studentTestService.GetByTemplateIdAsync(templateId);
+
+        var examTemplate = await _examTemplateService.GetByIdAsync(templateId);
+        if (examTemplate == null)
+        {
+            return NotFound();
+        }
+
+        var studentTestDtos = studentTests.Select(t => new StudentTestResultDto
+        {
+            StudentName = t.Student.Name + " " + t.Student.Surname,
+            StartTime = t.StartTime,
+            EndTime = t.EndTime,
+            Score = t.TotalScore,
+            TotalQuestions = examTemplate.NumberOfQuestions
+        }).ToList();
+
+        return View(studentTestDtos);
+    }
+
     // POST: StudentTest/StartTest
     [HttpPost]
     [Authorize(Roles = "Student")]

@@ -5,6 +5,7 @@ using OnlineTesting.Models;
 using OnlineTesting.Services.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using OnlineTesting.Models.DTOs.ExamTemplate;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineTesting.Controllers;
 

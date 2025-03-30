@@ -26,6 +26,11 @@ public class StudentTestService : IStudentTestService
         return await _unitOfWork.StudentTests.GetByStudentIdAsync(studentId);
     }
 
+    public async Task<IEnumerable<StudentTest>> GetByTemplateIdAsync(int templateId)
+    {
+        return await _unitOfWork.StudentTests.GetByTemplateIdAsync(templateId);
+    }
+
     public async Task<StudentTest> GetWithResponsesAsync(int testId)
     {
         return await _unitOfWork.StudentTests.GetWithResponsesAsync(testId);
@@ -180,10 +185,8 @@ public class StudentTestService : IStudentTestService
             throw new InvalidOperationException("Тест не знайдено.");
         }
 
-        // Отримуємо всі відповіді студента для цього тесту
         var responses = test.StudentResponses.ToList();
 
-        // Отримуємо всі питання, на які студент відповідав
         var questionIds = responses.Select(r => r.QuestionId).Distinct().ToList();
         var questions = await _unitOfWork.Questions
             .GetAll()

@@ -20,7 +20,8 @@ public class StudentTestRepository : GenericRepository<StudentTest>, IStudentTes
     public async Task<IEnumerable<StudentTest>> GetByTemplateIdAsync(int templateId)
     {
         return await _context.StudentTests
-            .Where(st => st.TemplateId == templateId)
+            .Where(t => t.TemplateId == templateId)
+            .Include(t => t.Student)
             .ToListAsync();
     }
 
