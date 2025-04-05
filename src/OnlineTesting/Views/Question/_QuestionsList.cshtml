@@ -2,31 +2,41 @@
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Текст питання</th>
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var question in Model)
-            {
+    <div class="table-responsive shadow rounded">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-light">
                 <tr>
-                    <td>@question.Text</td>
-                    <td>
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <a asp-action="Edit" asp-route-id="@question.Id" class="btn btn-warning">Редагувати</a>
-                            <a asp-action="Delete" asp-route-id="@question.Id" class="btn btn-danger">Видалити</a>
-                        }
-                    </td>
+                    <th>Текст питання</th>
+                    <th class="text-end">Дії</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var question in Model)
+                {
+                    <tr>
+                        <td>@question.Text</td>
+                        <td class="text-end">
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@question.Id">
+                                    ✏️ Редагувати
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@question.Id">
+                                    🗑️ Видалити
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <p>Питань для цієї дисципліни немає.</p>
+    <div class="alert alert-warning mt-3">
+        Для цієї дисципліни ще не додано питань.
+    </div>
 }
+
+
