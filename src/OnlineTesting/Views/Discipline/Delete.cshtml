@@ -1,19 +1,19 @@
 ﻿@model Discipline
 
-<h2>Видалити дисципліну</h2>
+@{
+    ViewData["Title"] = "Видалення дисципліни";
+}
 
-<h3>Ви впевнені що хочете видалити дану дисципліну?</h3>
+<div class="container pt-4">
+    <h2 class="text-danger mb-4">❗ Видалити дисципліну</h2>
+    <p>Ви впевнені, що хочете видалити дисципліну <strong>@Model.Name</strong>?</p>
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Назва</dt>
-        <dd class="col-sm-10">@Model.Name</dd>
-    </dl>
-
-    <form asp-action="Delete" method="post">
+    <form asp-action="Delete" method="post" class="mt-4">
         <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Підтвердити</button>
-        <a asp-action="Index" class="btn btn-secondary">Повернутися</a>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">← Назад</a>
+            <button type="submit" class="btn btn-danger">🗑️ Підтвердити видалення</button>
+        </div>
     </form>
 </div>
