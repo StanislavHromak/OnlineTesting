@@ -1,40 +1,48 @@
 ﻿@using OnlineTesting.Models.DTOs.ExamTemplate
 @model ExamTemplateDto
 
-<h2>Створити новий шаблон іспиту</h2>
+@{
+    ViewData["Title"] = "Створити шаблон іспиту";
+}
 
-<form asp-action="Create" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="container pt-4">
+    <h2 class="text-primary mb-4">➕ Створити новий шаблон іспиту</h2>
 
-    <div class="form-group">
-        <label asp-for="Name" class="control-label">Назва</label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" method="post" class="shadow p-4 rounded bg-white">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="form-group">
-        <label asp-for="DisciplineId" class="control-label">Дисципліна</label>
-        <select asp-for="DisciplineId" class="form-control" asp-items="ViewBag.Disciplines"></select>
-        <span asp-validation-for="DisciplineId" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Назва</label>
+            <input asp-for="Name" class="form-control" placeholder="Введіть назву шаблону" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="QuestionCount" class="control-label">Кількість питань</label>
-        <input asp-for="QuestionCount" class="form-control" type="number" />
-        <span asp-validation-for="QuestionCount" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="DisciplineId" class="form-label">Дисципліна</label>
+            <select asp-for="DisciplineId" class="form-select" asp-items="ViewBag.Disciplines">
+                <option value="">-- Оберіть дисципліну --</option>
+            </select>
+            <span asp-validation-for="DisciplineId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="DurationMinutes" class="control-label">Тривалість (хв)</label>
-        <input asp-for="DurationMinutes" class="form-control" type="number" />
-        <span asp-validation-for="DurationMinutes" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="QuestionCount" class="form-label">Кількість питань</label>
+            <input asp-for="QuestionCount" class="form-control" type="number" placeholder="Введіть кількість" />
+            <span asp-validation-for="QuestionCount" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Створити</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </div>
-</form>
+        <div class="mb-4">
+            <label asp-for="DurationMinutes" class="form-label">Тривалість (хв)</label>
+            <input asp-for="DurationMinutes" class="form-control" type="number" placeholder="Введіть тривалість" />
+            <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">💾 Створити</button>
+            <a asp-action="Index" class="btn btn-secondary">↩️ Скасувати</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -1,30 +1,52 @@
 ﻿@using OnlineTesting.Models.DTOs.ExamTemplate
-@model ExamTemplateEditDto
+@model ExamTemplateDto
 
-<h2>Редагувати шаблон тесту</h2>
+@{
+    ViewData["Title"] = "Редагувати шаблон іспиту";
+}
 
-<form asp-action="Edit" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
+<div class="container pt-4">
+    <h2 class="text-primary mb-4">✏️ Редагувати шаблон іспиту</h2>
 
-    <div class="form-group">
-        <label asp-for="Name" class="control-label">Назва</label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+    <form asp-action="Edit" method="post" class="shadow p-4 rounded bg-white">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="form-group">
-        <label asp-for="Duration" class="control-label">Тривалість (хв)</label>
-        <input asp-for="Duration" class="form-control" type="number" />
-        <span asp-validation-for="Duration" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Назва</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </div>
-</form>
+        <div class="mb-3">
+            <label asp-for="DisciplineId" class="form-label">Дисципліна</label>
+            <select asp-for="DisciplineId" class="form-select" asp-items="ViewBag.Disciplines">
+                <option value="">-- Оберіть дисципліну --</option>
+            </select>
+            <span asp-validation-for="DisciplineId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="QuestionCount" class="form-label">Кількість питань</label>
+            <input asp-for="QuestionCount" class="form-control" type="number" />
+            <span asp-validation-for="QuestionCount" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="DurationMinutes" class="form-label">Тривалість (хв)</label>
+            <input asp-for="DurationMinutes" class="form-control" type="number" />
+            <span asp-validation-for="DurationMinutes" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">💾 Зберегти</button>
+            <a asp-action="Index" class="btn btn-secondary">↩️ Скасувати</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+

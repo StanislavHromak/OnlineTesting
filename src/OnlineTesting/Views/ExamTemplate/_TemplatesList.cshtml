@@ -1,38 +1,42 @@
 ﻿@model IEnumerable<ExamTemplate>
 
-@if (Model.Any())
+@if (!Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Назва</th>
-                <th>Кількість питань</th>
-                <th>Тривалість (хв)</th>
-                <th>Дії</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var template in Model)
-            {
-                <tr>
-                    <td>@template.Name</td>
-                    <td>@template.NumberOfQuestions</td>
-                    <td>@template.TimeLimit</td>
-                    <td>
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <a asp-action="StudentResults" asp-controller="StudentTest" asp-route-templateId="@template.Id"
-                            class="btn btn-info">Результати студентів</a>
-                            <a asp-action="Edit" asp-route-id="@template.Id" class="btn btn-warning">Редагувати</a>
-                            <a asp-action="Delete" asp-route-id="@template.Id" class="btn btn-danger">Видалити</a>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="alert alert-info mt-4">
+        Шаблонів для обраної дисципліни поки немає.
+    </div>
 }
 else
 {
-    <p>Шаблонів для цієї дисципліни немає.</p>
+    <div class="table-responsive mt-4 shadow rounded">
+        <table class="table table-hover table-striped align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Назва шаблону</th>
+                    <th>Кількість питань</th>
+                    <th>Час на проходження (хв)</th>
+                    <th class="text-end">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var template in Model)
+                {
+                    <tr>
+                        <td>@template.Name</td>
+                        <td>@template.NumberOfQuestions</td>
+                        <td>@template.TimeLimit</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@template.Id">
+                                ✏️ Редагувати
+                            </a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@template.Id">
+                                🗑️ Видалити
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
+
