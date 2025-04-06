@@ -1,28 +1,34 @@
-﻿@model IEnumerable<ExamTemplate>
+﻿@model IEnumerable<OnlineTesting.Models.DTOs.ExamTemplate.ExamTemplateDto>
 
-<h2>Шаблони іспитів</h2>
+@{
+    ViewData["Title"] = "Шаблони іспитів";
+}
 
-<div class="form-group">
-    <label for="disciplineSelect">Оберіть дисципліну:</label>
-    <select id="disciplineSelect" class="form-control">
-        <option value="">-- Оберіть дисципліну --</option>
-        @foreach (var discipline in ViewBag.Disciplines)
+<div class="container pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">📋 Шаблони іспитів</h2>
+
+        @if (User.IsInRole("Teacher"))
         {
-            <option value="@discipline.Value">@discipline.Text</option>
+            <a asp-action="Create" class="btn btn-primary">➕ Створити новий шаблон</a>
         }
-    </select>
-</div>
+    </div>
 
-<div id="templatesList">
-    <p>Оберіть дисципліну, щоб переглянути шаблони іспитів.</p>
-</div>
+    <div class="mb-3">
+        <label for="disciplineSelect" class="form-label fw-bold">Оберіть дисципліну:</label>
+        <select id="disciplineSelect" class="form-select">
+            <option value="">-- Оберіть дисципліну --</option>
+            @foreach (var discipline in ViewBag.Disciplines)
+            {
+                <option value="@discipline.Value">@discipline.Text</option>
+            }
+        </select>
+    </div>
 
-<p>
-    @if (User.IsInRole("Teacher"))
-    {
-        <a asp-action="Create" class="btn btn-primary">Створити новий шаблон</a>
-    }
-</p>
+    <div id="templatesList" class="mt-3">
+        <div class="alert alert-secondary">Оберіть дисципліну, щоб переглянути шаблони іспитів.</div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -38,13 +44,16 @@
                             $("#templatesList").html(data);
                         },
                         error: function () {
-                            $("#templatesList").html('<p>Помилка при завантаженні шаблонів.</p>');
+                            $("#templatesList").html('<div class="alert alert-danger">❌ Помилка при завантаженні шаблонів.</div>');
                         }
                     });
                 } else {
-                    $("#templatesList").html('<p>Оберіть дисципліну, щоб переглянути шаблони іспитів.</p>');
+                    $("#templatesList").html('<div class="alert alert-secondary">Оберіть дисципліну, щоб переглянути шаблони іспитів.</div>');
                 }
             });
         });
     </script>
 }
+
+
+

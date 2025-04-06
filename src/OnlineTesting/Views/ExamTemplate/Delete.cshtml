@@ -1,25 +1,36 @@
 ﻿@using OnlineTesting.Models.DTOs.ExamTemplate
 @model ExamTemplateDto
 
-<h2>Видалити шаблон іспиту</h2>
+@{
+    ViewData["Title"] = "Видалити шаблон";
+}
 
-<h3>Ви впевнені, що хочете видалити цей шаблон?</h3>
+<div class="container pt-4">
+    <h2 class="text-danger mb-3">🗑️ Видалити шаблон іспиту</h2>
 
-<div>
-    <h4>@Model.Name</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Назва</dt>
-        <dd class="col-sm-10">@Model.Name</dd>
-        <dt class="col-sm-2">Кількість питань</dt>
-        <dd class="col-sm-10">@Model.QuestionCount</dd>
-        <dt class="col-sm-2">Тривалість (хв)</dt>
-        <dd class="col-sm-10">@Model.DurationMinutes</dd>
-    </dl>
+    <div class="alert alert-warning">
+        <strong>Увага:</strong> Ви дійсно хочете видалити цей шаблон? Цю дію не можна буде скасувати.
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Name</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">Кількість питань</dt>
+                <dd class="col-sm-8">@Model.QuestionCount</dd>
+                <dt class="col-sm-4">Тривалість (хв)</dt>
+                <dd class="col-sm-8">@Model.DurationMinutes</dd>
+            </dl>
+        </div>
+    </div>
 
     <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Видалити</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-danger">Так, видалити</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </div>
     </form>
 </div>
+

@@ -5,14 +5,16 @@
     ViewData["Title"] = "Результати студентів";
 }
 
-<div class="container">
-    <h2 class="mt-4">Результати студентів</h2>
-    <p class="text-muted">Шаблон іспиту: #@Model.FirstOrDefault()?.TotalQuestions</p>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Результати студентів</h2>
 
     @if (Model.Any())
     {
-        <div class="card shadow-sm">
+        <div class="card shadow-sm mb-4">
             <div class="card-body">
+                <div class="mb-3">
+                    <strong>Шаблон іспиту:</strong> #@Model.FirstOrDefault()?.TotalQuestions
+                </div>
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -55,7 +57,7 @@
         </div>
     }
 
-    <div class="mt-4">
-        <a asp-controller="ExamTemplate" asp-action="Index" class="btn btn-secondary">Повернутися до шаблонів</a>
+    <div class="text-center mt-4">
+        <a asp-controller="ExamTemplate" asp-action="Index" class="btn btn-secondary btn-lg">Повернутися до шаблонів</a>
     </div>
 </div>

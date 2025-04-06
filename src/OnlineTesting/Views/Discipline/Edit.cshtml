@@ -1,21 +1,27 @@
 ﻿@model Discipline
 
-<h2>Редагувати @Model.Name</h2>
+@{
+    ViewData["Title"] = "Редагування дисципліни";
+}
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
+<div class="container pt-4">
+    <h2 class="text-primary mb-4">Редагувати дисципліну: @Model.Name</h2>
 
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" value="@Model.Name"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+    <form asp-action="Edit" method="post" class="shadow rounded p-4 bg-light">
+        <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-        <a asp-action="Index" class="btn btn-secondary">Повернутися</a>
-    </div>
-</form>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Назва дисципліни</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">← Назад</a>
+            <button type="submit" class="btn btn-primary">💾 Зберегти</button>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

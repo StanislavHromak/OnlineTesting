@@ -1,8 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ласкаво просимо до Triton";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container pt-5">
+    <div class="text-center mb-5">
+        <img src="~/icons/Triton_logo.png" alt="Triton Logo" style="height: 100px;" class="mb-3" />
+        <p class="lead text-muted">Система онлайн-тестування</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-4">Увійти до системи</h4>
+                    <a href="/Identity/Account/Login" class="btn btn-primary w-100 mb-3">🔐 Увійти</a>
+                    <p class="text-muted">Ще не маєте акаунта?</p>
+                    <a href="/Identity/Account/Register" class="btn btn-outline-secondary w-100">📝 Зареєструватися</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+

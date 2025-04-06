@@ -1,19 +1,25 @@
 ﻿@model Discipline
 
-<h2>Додати</h2>
+@{
+    ViewData["Title"] = "Додати дисципліну";
+}
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+<div class="container pt-4">
+    <h2 class="text-primary mb-4">Додати нову дисципліну</h2>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Створити</button>
-        <a asp-action="Index" class="btn btn-secondary">Повернутися</a>
-    </div>
-</form>
+    <form asp-action="Create" method="post" class="shadow rounded p-4 bg-light">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Назва дисципліни</label>
+            <input asp-for="Name" class="form-control" placeholder="Наприклад: Математика" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">← Назад</a>
+            <button type="submit" class="btn btn-success">✅ Створити</button>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

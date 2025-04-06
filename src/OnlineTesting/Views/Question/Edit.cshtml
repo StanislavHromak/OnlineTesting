@@ -1,58 +1,58 @@
-﻿@using OnlineTesting.Models.DTOs
-@model QuestionDto
+﻿@model OnlineTesting.Models.DTOs.QuestionDto
 
 @{
     ViewData["Title"] = "Редагувати питання";
-    bool isUsedInCompletedTests = ViewBag.IsUsedInCompletedTests ?? false;
 }
 
-<h2>Редагувати питання</h2>
+<div class="container pt-4">
+    <h2 class="text-primary mb-4">✏️ Редагувати питання</h2>
 
-@if (isUsedInCompletedTests)
-{
-    <div class="alert alert-warning" role="alert">
-        Це питання використовується в завершених тестах, тому його не можна редагувати.
-    </div>
-}
+    <form asp-action="Edit" method="post" class="shadow p-4 rounded bg-light">
+        <input type="hidden" asp-for="Id" />
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="form-group">
-        <label asp-for="DisciplineId" class="control-label">Дисципліна</label>
-        <select asp-for="DisciplineId" class="form-control" asp-items="ViewBag.Disciplines"></select>
-        <span asp-validation-for="DisciplineId" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Text" class="control-label">Текст питання</label>
-        <textarea asp-for="Text" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Text" class="text-danger"></span>
-    </div>
-
-    <h4>Відповіді</h4>
-    @for (int i = 0; i < Model.Answers.Count; i++)
-    {
-        <div class="form-group">
-            <label asp-for="Answers[i].Text" class="control-label">Відповідь @(i + 1)</label>
-            <input asp-for="Answers[i].Text" class="form-control" />
-            <span asp-validation-for="Answers[i].Text" class="text-danger"></span>
-
-            <div class="form-check">
-                <input asp-for="Answers[i].IsCorrect" class="form-check-input" type="checkbox" />
-                <label asp-for="Answers[i].IsCorrect" class="form-check-label">Правильна відповідь</label>
-            </div>
+        <div class="mb-3">
+            <label asp-for="Text" class="form-label">Текст питання</label>
+            <input asp-for="Text" class="form-control" />
+            <span asp-validation-for="Text" class="text-danger"></span>
         </div>
-    }
 
-    <div class="form-group mt-3">
-        <button type="submit" class="btn btn-primary" disabled="@isUsedInCompletedTests">Зберегти</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </div>
-</form>
+        <div class="mb-3">
+            <label asp-for="DisciplineId" class="form-label">Дисципліна</label>
+            <select asp-for="DisciplineId" class="form-select" asp-items="ViewBag.Disciplines">
+                <option value="">-- Оберіть дисципліну --</option>
+            </select>
+            <span asp-validation-for="DisciplineId" class="text-danger"></span>
+        </div>
+
+        <h5 class="mt-4 mb-2">Варіанти відповідей</h5>
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            <div class="row mb-3">
+                <div class="col-md-10">
+                    <input asp-for="Answers[@i].Text" class="form-control" placeholder="Варіант відповіді @(i + 1)" />
+                    <input type="hidden" asp-for="Answers[@i].Id" />
+                </div>
+                <div class="col-md-2 form-check d-flex align-items-center">
+                    <input asp-for="Answers[@i].IsCorrect" class="form-check-input me-2" />
+                    <label class="form-check-label">Правильна</label>
+                </div>
+            </div>
+        }
+
+        @if ((bool)(ViewBag.IsUsedInCompletedTests ?? false))
+        {
+            <div class="alert alert-warning mt-3">
+                ⚠️ Це питання вже використовувалося у завершених тестах. Будьте обережні з редагуванням!
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success mt-3">💾 Зберегти</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3 ms-2">↩️ Назад</a>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+

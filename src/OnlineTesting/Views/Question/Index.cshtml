@@ -1,28 +1,35 @@
 ﻿@model IEnumerable<Question>
 
-<h2>Питання</h2>
+@{
+    ViewData["Title"] = "Питання";
+}
 
-<div class="form-group">
-    <label for="disciplineSelect">Оберіть дисципліну:</label>
-    <select id="disciplineSelect" class="form-control">
-        <option value="">-- Оберіть дисципліну --</option>
-        @foreach (var discipline in ViewBag.Disciplines)
+<div class="container pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Питання до тестів</h2>
+        @if (User.IsInRole("Teacher"))
         {
-            <option value="@discipline.Value">@discipline.Text</option>
+            <a class="btn btn-primary" asp-action="Create">
+                ➕ Додати питання
+            </a>
         }
-    </select>
-</div>
+    </div>
 
-<div id="questionsList">
-    <p>Оберіть дисципліну, щоб переглянути питання.</p>
-</div>
+    <div class="mb-3">
+        <label for="disciplineSelect" class="form-label fw-semibold">🧠 Оберіть дисципліну:</label>
+        <select id="disciplineSelect" class="form-select">
+            <option value="">-- Оберіть дисципліну --</option>
+            @foreach (var discipline in ViewBag.Disciplines)
+            {
+                <option value="@discipline.Value">@discipline.Text</option>
+            }
+        </select>
+    </div>
 
-<p>
-    @if (User.IsInRole("Teacher"))
-    {
-        <a asp-action="Create" class="btn btn-primary">Створити нове питання</a>
-    }
-</p>
+    <div id="questionsList">
+        <div class="alert alert-info">Оберіть дисципліну, щоб переглянути пов’язані питання.</div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -30,21 +37,17 @@
             $("#disciplineSelect").change(function () {
                 var disciplineId = $(this).val();
                 if (disciplineId) {
-                    $.ajax({
-                        url: '@Url.Action("GetQuestionsByDiscipline", "Question")',
-                        type: 'GET',
-                        data: { disciplineId: disciplineId },
-                        success: function (data) {
-                            $("#questionsList").html(data);
-                        },
-                        error: function () {
-                            $("#questionsList").html('<p>Помилка при завантаженні питань.</p>');
-                        }
+                    $.get("/Question/GetQuestionsByDiscipline", { disciplineId }, function (data) {
+                        $("#questionsList").html(data);
                     });
                 } else {
-                    $("#questionsList").html('<p>Оберіть дисципліну, щоб переглянути питання.</p>');
+                    $("#questionsList").html('<div class="alert alert-info">Оберіть дисципліну, щоб переглянути пов’язані питання.</div>');
                 }
             });
         });
     </script>
 }
+
+
+
+
