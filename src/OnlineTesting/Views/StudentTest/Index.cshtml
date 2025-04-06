@@ -1,44 +1,64 @@
 ﻿@using OnlineTesting.Models.DTOs.StudentTest
 @model IEnumerable<StudentTestDto>
 
-<h2>Доступні тести</h2>
+@{
+    ViewData["Title"] = "Доступні тести";
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Назва тесту</th>
-            <th>Дисципліна</th>
-            <th>Тривалість (хв)</th>
-            <th>Кількість питань</th>
-            <th>Статус</th>
-            <th>Дії</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var test in Model)
-        {
-            <tr>
-                <td>@test.TemplateName</td>
-                <td>@test.DisciplineName</td>
-                <td>@test.Duration</td>
-                <td>@test.QuestionCount</td>
-                <td>
-                    @if (test.HasTaken)
+<div class="container pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">📋 Доступні тести</h2>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info shadow-sm">Наразі немає доступних тестів.</div>
+    }
+    else
+    {
+        <div class="table-responsive shadow rounded">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Назва тесту</th>
+                        <th>Дисципліна</th>
+                        <th>Тривалість (хв)</th>
+                        <th>Кількість питань</th>
+                        <th>Статус</th>
+                        <th class="text-center">Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var test in Model)
                     {
-                        <span>Пройдено (Бал: @test.Score / @test.QuestionCount)</span>
+                        <tr>
+                            <td>@test.TemplateName</td>
+                            <td>@test.DisciplineName</td>
+                            <td>@test.Duration</td>
+                            <td>@test.QuestionCount</td>
+                            <td>
+                                @if (test.HasTaken)
+                                {
+                                    <span class="badge bg-success">Пройдено (@test.Score / @test.QuestionCount)</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Не пройдено</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <form asp-action="StartTest" method="post" class="d-inline">
+                                    <input type="hidden" name="templateId" value="@test.TemplateId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary" @(test.HasTaken ? "disabled" : "")>
+                                        ▶️ Почати
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     }
-                    else
-                    {
-                        <span>Не пройдено</span>
-                    }
-                </td>
-                <td>
-                    <form asp-action="StartTest" method="post">
-                        <input type="hidden" name="templateId" value="@test.TemplateId" />
-                        <button type="submit" class="btn btn-primary" disabled="@test.HasTaken">Почати тест</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

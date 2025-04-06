@@ -1,41 +1,59 @@
 ﻿@using OnlineTesting.Models.DTOs.StudentTest
 @model TakeTestDto
 
-<h2>Проходження тесту</h2>
+@{
+    ViewData["Title"] = "Проходження тесту";
+}
 
-<div>
-    <h4>Питання @(Model.CurrentQuestionIndex + 1) з @Model.TotalQuestions</h4>
-    <p>Залишилося часу: <span id="timer">@Model.RemainingTimeSeconds</span> секунд</p>
-    <hr />
+<div class="container pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Проходження тесту</h2>
+        <span class="badge bg-danger fs-5 shadow-sm">
+            ⏰ <span id="timer">--:--:--</span>
+        </span>
+    </div>
 
-    <form id="questionForm">
-        <input type="hidden" name="TestId" value="@Model.TestId" />
-        <input type="hidden" name="QuestionId" value="@Model.CurrentQuestion.QuestionId" />
-
-        <div class="form-group">
-            <label>@Model.CurrentQuestion.Text</label>
-            <div>
-                @foreach (var answer in Model.CurrentQuestion.Answers)
-                {
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="SelectedAnswerIds" value="@answer.AnswerId" />
-                        <label class="form-check-label">@answer.Text</label>
-                    </div>
-                }
+    <div class="card shadow border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+                <h5 class="text-muted">Питання @(Model.CurrentQuestionIndex + 1) з @Model.TotalQuestions</h5>
             </div>
-        </div>
 
-        <div class="form-group">
-            @if (Model.CurrentQuestionIndex < Model.TotalQuestions - 1)
-            {
-                <button type="button" id="nextButton" class="btn btn-primary">Далі</button>
-            }
-            else
-            {
-                <button type="button" id="nextButton" class="btn btn-primary">Завершити</button>
-            }
+            <form id="questionForm">
+                <input type="hidden" name="TestId" value="@Model.TestId" />
+                <input type="hidden" name="QuestionId" value="@Model.CurrentQuestion.QuestionId" />
+
+                <div class="mb-4">
+                    <p class="fs-5 fw-semibold">@Model.CurrentQuestion.Text</p>
+
+                    @foreach (var answer in Model.CurrentQuestion.Answers)
+                    {
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="SelectedAnswerIds" value="@answer.AnswerId" id="answer_@answer.AnswerId" />
+                            <label class="form-check-label" for="answer_@answer.AnswerId">
+                                @answer.Text
+                            </label>
+                        </div>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    @if (Model.CurrentQuestionIndex < Model.TotalQuestions - 1)
+                    {
+                        <button type="button" id="nextButton" class="btn btn-primary">
+                            ➡️ Далі
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" id="nextButton" class="btn btn-success">
+                            ✅ Завершити тест
+                        </button>
+                    }
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {
@@ -44,9 +62,20 @@
             var remainingTime = @Model.RemainingTimeSeconds;
             var timerElement = $("#timer");
 
+            function formatTime(seconds) {
+                var h = Math.floor(seconds / 3600);
+                var m = Math.floor((seconds % 3600) / 60);
+                var s = seconds % 60;
+                return h.toString().padStart(2, '0') + ':' +
+                       m.toString().padStart(2, '0') + ':' +
+                       s.toString().padStart(2, '0');
+            }
+
+            timerElement.text(formatTime(remainingTime));
+
             var timer = setInterval(function () {
                 remainingTime--;
-                timerElement.text(remainingTime);
+                timerElement.text(formatTime(remainingTime));
 
                 if (remainingTime <= 0) {
                     clearInterval(timer);
@@ -83,3 +112,4 @@
         });
     </script>
 }
+
