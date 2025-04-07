@@ -4,6 +4,8 @@ using OnlineTesting.Models.DTOs.StudentTest;
 using OnlineTesting.Models.DTOs;
 using OnlineTesting.Services.Abstractions;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using OnlineTesting.Models;
 
 namespace OnlineTesting.Controllers;
 
@@ -11,11 +13,14 @@ public class StudentTestController : Controller
 {
     private readonly IStudentTestService _studentTestService;
     private readonly IExamTemplateService _examTemplateService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public StudentTestController(IStudentTestService studentTestService, IExamTemplateService examTemplateService)
+    public StudentTestController(IStudentTestService studentTestService, IExamTemplateService examTemplateService,
+        UserManager<ApplicationUser> userManager)
     {
         _studentTestService = studentTestService;
         _examTemplateService = examTemplateService;
+        _userManager = userManager;
     }
 
     // GET: StudentTest
@@ -40,7 +45,38 @@ public class StudentTestController : Controller
         return View(studentTestDtos);
     }
 
-    [Authorize(Roles = "Teacher")]
+    // GET: StudentTests/ByStudent/5
+    public async Task<IActionResult> ByStudent(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var studentTests = await _studentTestService.GetByStudentIdWithTemplateAsync(user.Id);
+        var testResults = new List<StudentTestResultDto>();
+
+        foreach (var test in studentTests.Where(t => t.EndTime.HasValue))
+        {
+            var template = await _examTemplateService.GetByIdAsync(test.TemplateId);
+
+            testResults.Add(new StudentTestResultDto
+            {
+                TestId = test.Id,
+                TemplateName = template?.Name ?? "Невідомий шаблон",
+                StartTime = test.StartTime,
+                EndTime = test.EndTime,
+                Score = test.TotalScore,
+                TotalQuestions = test.ExamTemplate.NumberOfQuestions
+            });
+        }
+
+        ViewBag.StudentName = $"{user.Surname} {user.Name} {user.MiddleName}".Trim();
+        return View(testResults);
+    }
+
+    [Authorize(Roles = "Teacher, Dean")]
     public async Task<IActionResult> StudentResults(int templateId)
     {
         var studentTests = await _studentTestService.GetByTemplateIdAsync(templateId);

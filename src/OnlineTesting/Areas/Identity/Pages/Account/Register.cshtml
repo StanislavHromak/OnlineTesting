@@ -42,7 +42,21 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <div class="form-group">
+                <label asp-for="Input.Role">Роль</label>
+                <select asp-for="Input.Role" class="form-control">
+                    @if (User.IsInRole("Dean"))
+                    {
+                        <option value="Teacher">Вчитель</option>
+                        <option value="Student">Учень</option>
+                    }
+                    else if (User.IsInRole("Teacher"))
+                    {
+                        <option value="Student">Учень</option>
+                    }
+                </select>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Зареєструвати</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

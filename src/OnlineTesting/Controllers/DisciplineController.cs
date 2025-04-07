@@ -23,7 +23,7 @@ public class DisciplineController : Controller
     }
 
     // GET: Discipline/Create
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public IActionResult Create()
     {
         return View();
@@ -32,7 +32,7 @@ public class DisciplineController : Controller
     // POST: Discipline/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public async Task<IActionResult> Create(Discipline discipline)
     {
         if (ModelState.IsValid)
@@ -44,7 +44,7 @@ public class DisciplineController : Controller
     }
 
     // GET: Discipline/Edit/5
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public async Task<IActionResult> Edit(int id)
     {
         var discipline = await _disciplineService.GetByIdAsync(id);
@@ -58,7 +58,7 @@ public class DisciplineController : Controller
     // POST: Discipline/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public async Task<IActionResult> Edit(int id, Discipline discipline)
     {
         if (id != discipline.Id)
@@ -82,7 +82,7 @@ public class DisciplineController : Controller
     }
 
     // GET: Discipline/Delete/5
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public async Task<IActionResult> Delete(int id)
     {
         var discipline = await _disciplineService.GetByIdAsync(id);
@@ -96,7 +96,7 @@ public class DisciplineController : Controller
     // POST: Discipline/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Dean")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _disciplineService.DeleteAsync(id);

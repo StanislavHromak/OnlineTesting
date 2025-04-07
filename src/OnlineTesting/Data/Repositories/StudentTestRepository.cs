@@ -13,7 +13,16 @@ public class StudentTestRepository : GenericRepository<StudentTest>, IStudentTes
     public async Task<IEnumerable<StudentTest>> GetByStudentIdAsync(string studentId)
     {
         return await _context.StudentTests
-            .Where(st => st.StudentId == studentId)
+            .Where(t => t.StudentId == studentId)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<StudentTest>> GetByStudentIdWithTemplateAsync(string studentId)
+    {
+        return await _context.StudentTests
+            .Where(t => t.StudentId == studentId)
+            .Include(t => t.ExamTemplate)
+            .ThenInclude(et => et.Discipline)
             .ToListAsync();
     }
 

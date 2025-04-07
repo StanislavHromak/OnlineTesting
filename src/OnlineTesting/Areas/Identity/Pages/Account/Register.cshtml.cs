@@ -23,6 +23,7 @@ using OnlineTesting.Models;
 
 namespace OnlineTesting.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Dean,Teacher")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -107,6 +108,10 @@ namespace OnlineTesting.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
 
@@ -128,12 +133,11 @@ namespace OnlineTesting.Areas.Identity.Pages.Account
                 user.MiddleName = Input.MiddleName;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Student");
+                    await _userManager.AddToRoleAsync(user, Input.Role);
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

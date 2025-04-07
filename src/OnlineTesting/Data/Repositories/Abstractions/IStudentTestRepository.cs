@@ -5,6 +5,7 @@ namespace OnlineTesting.Data.Repositories.Abstractions;
 public interface IStudentTestRepository : IGenericRepository<StudentTest>
 {
     Task<IEnumerable<StudentTest>> GetByStudentIdAsync(string studentId);
+    Task<IEnumerable<StudentTest>> GetByStudentIdWithTemplateAsync(string studentId);
 
     Task<IEnumerable<StudentTest>> GetByTemplateIdAsync(int templateId);
 
