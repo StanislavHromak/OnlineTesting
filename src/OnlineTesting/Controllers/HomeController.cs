@@ -15,7 +15,8 @@ namespace OnlineTesting.Controllers
 
         public IActionResult Index()
         {
-            if(User.IsInRole("Teacher")) return RedirectToAction("Index", "Discipline");
+            if(User.IsInRole("Dean")) return RedirectToAction("Index", "Discipline");
+            if (User.IsInRole("Teacher")) return RedirectToAction("Index", "Questions");
             if (User.IsInRole("Student")) return RedirectToAction("Index", "StudentTest");
 
             return View();

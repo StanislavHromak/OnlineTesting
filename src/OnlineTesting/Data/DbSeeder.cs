@@ -37,7 +37,7 @@ public class DbSeeder
             var result = await userManager.CreateAsync(dean, "DeanPassword123!");
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(dean, "Teacher");
+                await userManager.AddToRoleAsync(dean, "Dean");
             }
             else
             {
