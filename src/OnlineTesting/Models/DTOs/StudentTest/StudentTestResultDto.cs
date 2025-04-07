@@ -2,6 +2,8 @@
 
 public class StudentTestResultDto
 {
+    public int TestId { get; set; }
+    public string TemplateName { get; set; }
     public string StudentName { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }

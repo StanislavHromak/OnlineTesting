@@ -26,6 +26,11 @@ public class StudentTestService : IStudentTestService
         return await _unitOfWork.StudentTests.GetByStudentIdAsync(studentId);
     }
 
+    public async Task<IEnumerable<StudentTest>> GetByStudentIdWithTemplateAsync(string studentId)
+    {
+        return await _unitOfWork.StudentTests.GetByStudentIdWithTemplateAsync(studentId);
+    }
+
     public async Task<IEnumerable<StudentTest>> GetByTemplateIdAsync(int templateId)
     {
         return await _unitOfWork.StudentTests.GetByTemplateIdAsync(templateId);

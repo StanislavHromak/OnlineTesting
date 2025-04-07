@@ -1,0 +1,42 @@
+﻿@using OnlineTesting.Models.DTOs.StudentTest
+@model IEnumerable<StudentTestResultDto>
+
+@{
+    ViewData["Title"] = "Оцінки студента";
+    var studentName = ViewBag.StudentName;
+}
+
+<h2>Оцінки студента: @studentName</h2>
+
+@if (!Model.Any())
+{
+    <p>Цей студент ще не пройшов жодного тесту.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Назва тесту</th>
+                <th>Час початку</th>
+                <th>Час завершення</th>
+                <th>Оцінка</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var test in Model)
+            {
+                <tr>
+                    <td>@test.TemplateName</td>
+                    <td>@test.StartTime.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>@(test.EndTime?.ToString("dd.MM.yyyy HH:mm:ss") ?? "Н/Д")</td>
+                    <td>@test.Score / @test.TotalQuestions</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p>
+    <a asp-controller="User" asp-action="Index" class="btn btn-secondary">Повернутися до списку користувачів</a>
+</p>
