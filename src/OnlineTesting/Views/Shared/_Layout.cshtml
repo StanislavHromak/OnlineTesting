@@ -36,6 +36,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ExamTemplate" asp-action="Index">Шаблони тестів</a>
                             </li>
                         }
+                        @if (!User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Користувачі</a>
+                            </li>
+                        }
                         @if (User.IsInRole("Student"))
                         {
                             <li class="nav-item">

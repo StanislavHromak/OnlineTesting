@@ -4,7 +4,7 @@ using OnlineTesting.Models;
 
 namespace OnlineTesting.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller    
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -16,7 +16,7 @@ namespace OnlineTesting.Controllers
         public IActionResult Index()
         {
             if(User.IsInRole("Dean")) return RedirectToAction("Index", "Discipline");
-            if (User.IsInRole("Teacher")) return RedirectToAction("Index", "Questions");
+            if (User.IsInRole("Teacher")) return RedirectToAction("Index", "Question");
             if (User.IsInRole("Student")) return RedirectToAction("Index", "StudentTest");
 
             return View();

@@ -1,0 +1,72 @@
+﻿@using OnlineTesting.Models.DTOs.User
+@model UserCreateDto
+
+@{
+    ViewData["Title"] = "Створити користувача";
+}
+
+<h2>Створити користувача</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating mb-3">
+        <input asp-for="Surname" class="form-control" aria-required="true" placeholder="Прізвище" />
+        <label asp-for="Surname">Прізвище</label>
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" aria-required="true" placeholder="Ім'я" />
+        <label asp-for="FirstName">Ім'я</label>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="MiddleName" class="form-control" placeholder="По батькові" />
+        <label asp-for="MiddleName">По батькові</label>
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Role" class="control-label"></label>
+        <select asp-for="Role" class="form-control">
+            @if (User.IsInRole("Dean"))
+            {
+                <option value="Teacher">Вчитель</option>
+                <option value="Student">Учень</option>
+            }
+            else if (User.IsInRole("Teacher"))
+            {
+                <option value="Student">Учень</option>
+            }
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Створити</button>
+        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

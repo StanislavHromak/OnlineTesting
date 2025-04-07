@@ -1,0 +1,39 @@
+﻿@using OnlineTesting.Models.DTOs.User
+@model IEnumerable<UserDto>
+
+@{
+    ViewData["Title"] = "Користувачі";
+}
+
+<h2>Користувачі</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Створити нового користувача</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ПІБ</th>
+            <th>Email</th>
+            <th>Роль</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>
+                    @if (User.IsInRole("Dean"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
