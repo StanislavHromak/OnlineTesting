@@ -1,0 +1,53 @@
+﻿@using OnlineTesting.Models.DTOs.User
+@model UserEditDto
+
+@{
+    ViewData["Title"] = "Редагувати користувача";
+}
+
+<h2>Редагувати користувача</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Role" /> @* Приховане поле для передачі Role *@
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Surname" class="form-control" aria-required="true" placeholder="Прізвище" />
+        <label asp-for="Surname">Прізвище</label>
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" aria-required="true" placeholder="Ім'я" />
+        <label asp-for="FirstName">Ім'я</label>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="MiddleName" class="form-control" placeholder="По батькові" />
+        <label asp-for="MiddleName">По батькові</label>
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Email" />
+        <label asp-for="Email">Email</label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="control-label">Роль</label>
+        <p class="form-control-plaintext">@Model.Role</p>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

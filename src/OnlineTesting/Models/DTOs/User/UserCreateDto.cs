@@ -4,9 +4,15 @@ namespace OnlineTesting.Models.DTOs.User;
 
 public class UserCreateDto
 {
+    [Required]
     public string FirstName { get; set; }
+
+    [Required]
     public string Surname { get; set; }
+
+    [Required]
     public string MiddleName { get; set; }
+
     [Required]
     [EmailAddress]
     public string Email { get; set; }

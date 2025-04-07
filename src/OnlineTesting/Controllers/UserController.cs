@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTesting.Models;
 using OnlineTesting.Models.DTOs.User;
+using System.Security.Claims;
 
 namespace OnlineTesting.Controllers;
 
@@ -84,5 +85,126 @@ public class UserController : Controller
             }
         }
         return View(model);
+    }
+
+    // GET: Users/Edit/5
+    public async Task<IActionResult> Edit(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var model = new UserEditDto
+        {
+            Id = user.Id,
+            FirstName = user.Name,
+            Surname = user.Surname,
+            MiddleName = user.MiddleName,
+            Email = user.Email,
+            Role = roles.FirstOrDefault()
+        };
+
+        return View(model);
+    }
+
+    // POST: Users/Edit/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(string id, UserEditDto model)
+    {
+        if (id != model.Id)
+        {
+            return BadRequest();
+        }
+
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (User.IsInRole("Teacher") && userRoles.Contains("Teacher"))
+            {
+                ModelState.AddModelError("", "Ви можете редагувати лише учнів.");
+                return View(model);
+            }
+
+            user.Name = model.FirstName;
+            user.Surname = model.Surname;
+            user.MiddleName = model.MiddleName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["Success"] = "Користувач успішно оновлений.";
+                return RedirectToAction(nameof(Index));
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+        return View(model);
+    }
+
+    // GET: Users/Delete/5
+    [Authorize(Roles = "Dean")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new UserDto
+        {
+            Id = user.Id,
+            FullName = $"{user.Surname} {user.Name} {user.MiddleName}",
+            Email = user.Email,
+            Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault()
+        };
+
+        return View(model);
+    }
+
+    // POST: Users/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Dean")]
+    public async Task<IActionResult> DeleteConfirmed(string id)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (user.Id == currentUserId)
+        {
+            TempData["Error"] = "Ви не можете видалити самого себе.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        var result = await _userManager.DeleteAsync(user);
+        if (result.Succeeded)
+        {
+            TempData["Success"] = "Користувач успішно видалений.";
+        }
+        else
+        {
+            TempData["Error"] = "Помилка при видаленні користувача.";
+        }
+
+        return RedirectToAction(nameof(Index));
     }
 }
