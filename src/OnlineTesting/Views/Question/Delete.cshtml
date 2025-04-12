@@ -34,11 +34,12 @@
             </ul>
         </div>
 
-        <form asp-action="DeleteConfirmed" method="post" class="mt-4">
+        <form asp-action="Delete" method="post" class="mt-4">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger me-2">✅ Так, видалити</button>
-            <a asp-action="Index" class="btn btn-secondary">↩️ Скасувати</a>
+            <button type="submit" class="btn btn-danger me-2">Так, видалити</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
         </form>
+
     </div>
 </div>
 

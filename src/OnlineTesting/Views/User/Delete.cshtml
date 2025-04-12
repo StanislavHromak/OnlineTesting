@@ -5,37 +5,29 @@
     ViewData["Title"] = "Видалити користувача";
 }
 
-<h2>Видалити користувача</h2>
+<div class="container pt-4">
+    <div class="alert alert-danger shadow-sm p-4 rounded">
+        <h2 class="text-danger mb-3">🗑️ Ви впевнені, що хочете видалити цього користувача?</h2>
 
-<h3>Ви впевнені, що хочете видалити цього користувача?</h3>
+        <div class="mb-3">
+            <label class="form-label fw-bold">ПІБ:</label>
+            <div class="form-control-plaintext">@Model.FullName</div>
+        </div>
 
-<div>
-    <h4>Користувач</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            ПІБ
-        </dt>
-        <dd class="col-sm-10">
-            @Model.FullName
-        </dd>
-        <dt class="col-sm-2">
-            Email
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Email
-        </dd>
-        <dt class="col-sm-2">
-            Роль
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Role
-        </dd>
-    </dl>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Email:</label>
+            <div class="form-control-plaintext">@Model.Email</div>
+        </div>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Видалити</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </form>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Роль:</label>
+            <div class="form-control-plaintext">@Model.Role</div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger me-2">Так, видалити</button>
+            <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+        </form>
+    </div>
 </div>
