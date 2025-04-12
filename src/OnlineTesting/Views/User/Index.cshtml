@@ -59,13 +59,17 @@
                                         <td>@user.FullName</td>
                                         <td>@user.Email</td>
                                         <td>@user.Role</td>
-                                        <td>
+                                        <td class="text-end">
                                             @if (User.IsInRole("Dean"))
                                             {
-                                                <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Редагувати</a>
+                                                <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary me-2">
+                                                    ✏️ Редагувати
+                                                </a>
                                                 @if (user.Id != currentUserId)
                                                 {
-                                                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Видалити</a>
+                                                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger">
+                                                        🗑️ Видалити
+                                                    </a>
                                                 }
                                             }
                                         </td>
@@ -109,14 +113,21 @@
                                         <td>@user.FullName</td>
                                         <td>@user.Email</td>
                                         <td>@user.Role</td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Редагувати</a>
-                                            <a asp-controller="StudentTest" asp-action="ByStudent" asp-route-id="@user.Id" class="btn btn-info btn-sm">Оцінки</a>
+                                        <td class="text-end">
+                                            <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary me-2">
+                                                ✏️ Редагувати
+                                            </a>
+                                            <a asp-controller="StudentTest" asp-action="ByStudent" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info me-2">
+                                                📊 Оцінки
+                                            </a>
                                             @if (User.IsInRole("Dean") && user.Id != currentUserId)
                                             {
-                                                <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Видалити</a>
+                                                <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger">
+                                                    🗑️ Видалити
+                                                </a>
                                             }
                                         </td>
+
                                     </tr>
                                 }
                             </tbody>
