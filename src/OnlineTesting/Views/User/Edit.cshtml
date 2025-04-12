@@ -5,48 +5,53 @@
     ViewData["Title"] = "Редагувати користувача";
 }
 
-<h2>Редагувати користувача</h2>
+<div class="container d-flex justify-content-center" style="margin-top: 50px;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px;">
+        <h2 class="text-center text-primary mb-4">📝 Редагувати користувача</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="Role" /> @* Приховане поле для передачі Role *@
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Role" /> @* Приховане поле для передачі Role *@
 
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="form-floating mb-3">
-        <input asp-for="Surname" class="form-control" aria-required="true" placeholder="Прізвище" />
-        <label asp-for="Surname">Прізвище</label>
-        <span asp-validation-for="Surname" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <input asp-for="Surname" class="form-control" aria-required="true" placeholder="Прізвище" />
+                <label asp-for="Surname">Прізвище</label>
+                <span asp-validation-for="Surname" class="text-danger small"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="FirstName" class="form-control" aria-required="true" placeholder="Ім'я" />
+                <label asp-for="FirstName">Ім'я</label>
+                <span asp-validation-for="FirstName" class="text-danger small"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="MiddleName" class="form-control" placeholder="По батькові" />
+                <label asp-for="MiddleName">По батькові</label>
+                <span asp-validation-for="MiddleName" class="text-danger small"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <label asp-for="Email">Email</label>
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Роль:</label>
+                <p class="form-control-plaintext">@Model.Role</p>
+            </div>
+
+            <button type="submit" class="w-100 btn btn-primary btn-lg">Зберегти</button>
+
+            <div class="mt-3 text-center">
+                <a asp-action="Index" class="btn btn-secondary w-100">Скасувати</a>
+            </div>
+        </form>
     </div>
-
-    <div class="form-floating mb-3">
-        <input asp-for="FirstName" class="form-control" aria-required="true" placeholder="Ім'я" />
-        <label asp-for="FirstName">Ім'я</label>
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
-
-    <div class="form-floating mb-3">
-        <input asp-for="MiddleName" class="form-control" placeholder="По батькові" />
-        <label asp-for="MiddleName">По батькові</label>
-        <span asp-validation-for="MiddleName" class="text-danger"></span>
-    </div>
-
-    <div class="form-floating mb-3">
-        <input asp-for="Email" class="form-control" placeholder="Email" />
-        <label asp-for="Email">Email</label>
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group mb-3">
-        <label class="control-label">Роль</label>
-        <p class="form-control-plaintext">@Model.Role</p>
-    </div>
-
-    <div class="form-group mt-3">
-        <button type="submit" class="btn btn-primary">Зберегти</button>
-        <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
