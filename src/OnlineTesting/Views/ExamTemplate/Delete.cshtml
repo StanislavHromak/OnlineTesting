@@ -1,36 +1,34 @@
-﻿@using OnlineTesting.Models.DTOs.ExamTemplate
-@model ExamTemplateDto
+﻿@model OnlineTesting.Models.DTOs.ExamTemplate.ExamTemplateDto
 
 @{
-    ViewData["Title"] = "Видалити шаблон";
+    ViewData["Title"] = "Видалення шаблону іспиту";
 }
 
 <div class="container pt-4">
-    <h2 class="text-danger mb-3">🗑️ Видалити шаблон іспиту</h2>
+    <div class="alert alert-danger shadow-sm p-4 rounded">
+        <h2 class="text-danger mb-3">🗑️ Ви впевнені, що хочете видалити цей шаблон іспиту?</h2>
 
-    <div class="alert alert-warning">
-        <strong>Увага:</strong> Ви дійсно хочете видалити цей шаблон? Цю дію не можна буде скасувати.
-    </div>
-
-    <div class="card mb-4 shadow-sm">
-        <div class="card-body">
-            <h4 class="card-title">@Model.Name</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-4">Кількість питань</dt>
-                <dd class="col-sm-8">@Model.QuestionCount</dd>
-                <dt class="col-sm-4">Тривалість (хв)</dt>
-                <dd class="col-sm-8">@Model.DurationMinutes</dd>
-            </dl>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Назва шаблону:</label>
+            <div class="form-control-plaintext">@Model.Name</div>
         </div>
-    </div>
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id" />
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-danger">Так, видалити</button>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Кількість питань:</label>
+            <div class="form-control-plaintext">@Model.QuestionCount</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Тривалість (хв):</label>
+            <div class="form-control-plaintext">@Model.DurationMinutes</div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger me-2">Так, видалити</button>
             <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
 

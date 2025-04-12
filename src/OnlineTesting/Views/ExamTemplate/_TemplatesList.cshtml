@@ -27,7 +27,9 @@ else
                         <td>@template.TimeLimit</td>
                         <td class="text-end">
                             <a asp-action="StudentResults" asp-controller="StudentTest" asp-route-templateId="@template.Id"
-                               class="btn btn-info">Результати студентів</a>
+                               class="btn btn-sm btn-outline-info me-2">
+                                📊 Результати студентів
+                            </a>
                             @if (User.IsInRole("Teacher"))
                             {
                                 <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@template.Id">

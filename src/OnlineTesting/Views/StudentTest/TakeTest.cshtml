@@ -6,14 +6,16 @@
 }
 
 <div class="container pt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary">Проходження тесту</h2>
-        <span class="badge bg-danger fs-5 shadow-sm">
-            <span id="timer">--:--:--</span>
-        </span>
+    <div class="card shadow border-0 mb-4" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-body text-center">
+            <h2 class="text-primary mb-3">Проходження тесту</h2>
+            <span class="badge bg-danger fs-5 shadow-sm">
+                <span id="timer" style="font-size: 2rem;">--:--:--</span>
+            </span>
+        </div>
     </div>
 
-    <div class="card shadow border-0 mb-4">
+    <div class="card shadow border-0 mb-4" style="max-width: 600px; margin: 0 auto;">
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
                 <h5 class="text-muted">Питання @(Model.CurrentQuestionIndex + 1) з @Model.TotalQuestions</h5>
@@ -112,4 +114,7 @@
         });
     </script>
 }
+
+
+
 
