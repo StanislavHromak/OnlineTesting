@@ -6,32 +6,30 @@
 }
 
 <div class="container pt-4">
-    <h2 class="text-primary text-center mb-4">📊 Результати тесту</h2>
+    <h2 class="text-primary text-center mb-5">📊 Результати тесту</h2>
 
     <div class="row g-4 justify-content-center">
         <div class="col-md-4">
-            <div class="card shadow border-0 text-center">
+            <div class="card shadow-lg border-0 text-center h-100">
                 <div class="card-body">
                     <h5 class="text-muted mb-2">Ваш бал</h5>
                     <p class="display-5 text-primary fw-bold">@Model.Score / @Model.TotalQuestions</p>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
-            <div class="card shadow border-0 text-center">
+            <div class="card shadow-lg border-0 text-center h-100">
                 <div class="card-body">
                     <h5 class="text-muted mb-2">Час початку</h5>
-                    <p class="fs-5">@Model.StartTime.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                    <p class="fs-4">@Model.StartTime.ToString("dd.MM.yyyy HH:mm:ss")</p>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
-            <div class="card shadow border-0 text-center">
+            <div class="card shadow-lg border-0 text-center h-100">
                 <div class="card-body">
                     <h5 class="text-muted mb-2">Час завершення</h5>
-                    <p class="fs-5">
+                    <p class="fs-4">
                         @if (Model.EndTime.HasValue)
                         {
                             @Model.EndTime.Value.ToString("dd.MM.yyyy HH:mm:ss")
@@ -47,8 +45,13 @@
     </div>
 
     <div class="text-center mt-5">
-        <a asp-action="Index" class="btn btn-outline-primary btn-lg shadow">
+        <a asp-action="Index" class="btn btn-outline-primary btn-lg shadow-lg">
             🔙 Повернутися до списку тестів
         </a>
     </div>
 </div>
+
+
+
+
+
