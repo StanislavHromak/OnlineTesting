@@ -58,7 +58,7 @@
                                     <tr>
                                         <td class="text-center">@user.FullName</td>
                                         <td class="text-center">@user.Email</td>
-                                        <td class="text-center">@user.Role</td>
+                                        <td class="text-center">@(user.Role == "Teacher" ? "Вчитель" : user.Role)</td>
                                         <td class="text-center">
                                             @if (User.IsInRole("Dean"))
                                             {
@@ -112,7 +112,7 @@
                                     <tr>
                                         <td class="text-center">@user.FullName</td>
                                         <td class="text-center">@user.Email</td>
-                                        <td class="text-center">@user.Role</td>
+                                        <td class="text-center">@(user.Role == "Student" ? "Студент" : user.Role)</td>
                                         <td class="text-center">
                                             <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary me-2">
                                                 ✏️ Редагувати

@@ -1,7 +1,8 @@
 ﻿@model OnlineTesting.Models.DTOs.QuestionDto
 
 @{
-    ViewData["Title"] = "Редагувати питання";
+    ViewData["Title"] = "Редагувати запитання";
+    bool isUsedInCompletedTests = ViewBag.IsUsedInCompletedTests ?? false;
 }
 
 <div class="container pt-4">
@@ -42,11 +43,11 @@
         @if ((bool)(ViewBag.IsUsedInCompletedTests ?? false))
         {
             <div class="alert alert-warning mt-3">
-                ⚠️ Це питання вже використовувалося у завершених тестах. Будьте обережні з редагуванням!
+                ⚠️ Це питання вже використовувалося в завершених тестах, тому його не можна редагувати.
             </div>
         }
 
-        <button type="submit" class="btn btn-success mt-3">💾 Зберегти</button>
+        <button type="submit" class="btn btn-success mt-3" disabled="@isUsedInCompletedTests">💾 Зберегти</button>
         <a asp-action="Index" class="btn btn-secondary mt-3 ms-2">↩️ Назад</a>
     </form>
 </div>

@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Редагувати шаблон тесту";
+    bool isUsedInCompletedTests = ViewBag.IsUsedInCompletedTests ?? false;
 }
 
 <div class="container pt-4">
@@ -23,7 +24,14 @@
             <span asp-validation-for="Duration" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">💾 Зберегти</button>
+        @if ((bool)(ViewBag.IsUsedInCompletedTests ?? false))
+        {
+            <div class="alert alert-warning mt-3">
+                ⚠️ Цей шаблон вже пройдений, тому його не можна редагувати.
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success mt-3" disabled="@isUsedInCompletedTests">💾 Зберегти</button>
         <a asp-action="Index" class="btn btn-secondary mt-3 ms-2">↩️ Назад</a>
     </form>
 </div>
