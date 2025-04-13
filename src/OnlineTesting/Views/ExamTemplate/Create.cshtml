@@ -27,13 +27,13 @@
 
         <div class="mb-3">
             <label asp-for="QuestionCount" class="form-label">Кількість питань</label>
-            <input asp-for="QuestionCount" class="form-control" type="number" placeholder="Введіть кількість" />
+            <input asp-for="QuestionCount" class="form-control" type="number" placeholder="Введіть кількість" min="5" value="5"/>
             <span asp-validation-for="QuestionCount" class="text-danger"></span>
         </div>
 
         <div class="mb-4">
             <label asp-for="DurationMinutes" class="form-label">Тривалість (хв)</label>
-            <input asp-for="DurationMinutes" class="form-control" type="number" placeholder="Введіть тривалість" />
+            <input asp-for="DurationMinutes" class="form-control" type="number" placeholder="Введіть тривалість" min="1" value="1"/>
             <span asp-validation-for="DurationMinutes" class="text-danger"></span>
         </div>
 

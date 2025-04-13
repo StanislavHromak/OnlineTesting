@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<Question>
 
 @{
-    ViewData["Title"] = "Питання";
+    ViewData["Title"] = "Запитання";
 }
 
 <div class="container pt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="text-primary">Питання до тестів</h2>
+        <h2 class="text-primary">Запитання до тестів</h2>
         @if (User.IsInRole("Teacher"))
         {
             <a class="btn btn-primary" asp-action="Create">
-                ➕ Додати питання
+                ➕ Додати запитання
             </a>
         }
     </div>
@@ -27,7 +27,7 @@
     </div>
 
     <div id="questionsList">
-        <div class="alert alert-info">Оберіть дисципліну, щоб переглянути пов’язані питання.</div>
+        <div class="alert alert-info">Оберіть дисципліну, щоб переглянути пов’язані запитання.</div>
     </div>
 </div>
 
