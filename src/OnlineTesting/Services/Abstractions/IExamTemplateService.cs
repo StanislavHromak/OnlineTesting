@@ -13,4 +13,5 @@ public interface IExamTemplateService
     Task CreateWithRandomQuestionsAsync(ExamTemplateDto templateDto);
     Task UpdateAsync(ExamTemplate examTemplate);
     Task DeleteAsync(int id);
+    Task<bool> IsUsedInCompletedTestsAsync(int templateId);
 }

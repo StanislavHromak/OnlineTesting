@@ -5,6 +5,7 @@ using OnlineTesting.Models;
 using OnlineTesting.Services.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using OnlineTesting.Models.DTOs.ExamTemplate;
+using OnlineTesting.Services;
 
 namespace OnlineTesting.Controllers;
 
@@ -104,6 +105,8 @@ public class ExamTemplateController : Controller
             Name = examTemplate.Name,
             Duration = examTemplate.TimeLimit
         };
+
+        ViewBag.IsUsedInCompletedTests = await _examTemplateService.IsUsedInCompletedTestsAsync(id);
         return View(examTemplateEditDto);
     }
 

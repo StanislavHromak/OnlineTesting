@@ -80,4 +80,10 @@ public class ExamTemplateService : IExamTemplateService
             await _unitOfWork.SaveChangesAsync();
         }
     }
+
+    public async Task<bool> IsUsedInCompletedTestsAsync(int templateId)
+    {
+        var studentTests = await _unitOfWork.StudentTests.GetByTemplateIdAsync(templateId);
+        return studentTests.Any();
+    }
 }
