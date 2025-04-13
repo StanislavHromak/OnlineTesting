@@ -171,6 +171,7 @@ public class ExamTemplateController : Controller
             TeacherId = template.TeacherId
         };
 
+        ViewBag.IsUsedInCompletedTests = await _examTemplateService.IsUsedInCompletedTestsAsync(id);
         return View(templateDto);
     }
 

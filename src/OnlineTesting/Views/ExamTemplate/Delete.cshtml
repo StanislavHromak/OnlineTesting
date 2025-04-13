@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Видалення шаблону іспиту";
+    bool isUsedInCompletedTests = ViewBag.IsUsedInCompletedTests ?? false;
 }
 
 <div class="container pt-4">
@@ -23,9 +24,16 @@
             <div class="form-control-plaintext">@Model.DurationMinutes</div>
         </div>
 
+        @if ((bool)(ViewBag.IsUsedInCompletedTests ?? false))
+        {
+            <div class="alert alert-warning mt-3">
+                ⚠️ Цей шаблон вже пройдений, тому його не можна видалити.
+            </div>
+        }
+
         <form asp-action="Delete" method="post" class="mt-4">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger me-2">Так, видалити</button>
+            <button type="submit" class="btn btn-danger me-2" disabled="@isUsedInCompletedTests">Так, видалити</button>
             <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
         </form>
     </div>

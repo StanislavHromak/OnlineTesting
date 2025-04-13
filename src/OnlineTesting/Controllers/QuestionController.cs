@@ -190,6 +190,7 @@ public class QuestionController : Controller
             }).ToList()
         };
 
+        ViewBag.IsUsedInCompletedTests = await _questionService.IsUsedInCompletedTestsAsync(id);
         return View(questionDto);
     }
 

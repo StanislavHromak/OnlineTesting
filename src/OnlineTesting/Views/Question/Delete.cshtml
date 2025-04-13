@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Видалення запитання";
+    bool isUsedInCompletedTests = ViewBag.IsUsedInCompletedTests ?? false;
 }
 
 <div class="container pt-4">
@@ -34,9 +35,17 @@
             </ul>
         </div>
 
+        @if ((bool)(ViewBag.IsUsedInCompletedTests ?? false))
+        {
+            <div class="alert alert-warning mt-3">
+                ⚠️ Це питання вже використовувалося в завершених тестах, тому його не можна видалити.
+            </div>
+        }
+
+
         <form asp-action="Delete" method="post" class="mt-4">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger me-2">Так, видалити</button>
+            <button type="submit" class="btn btn-danger me-2" disabled="@isUsedInCompletedTests">Так, видалити</button>
             <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
         </form>
 
